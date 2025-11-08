@@ -1,0 +1,70 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+
+// --- Main User Model (Represents You) ---
+model User {
+  id              Int           @id @default(autoincrement())
+  name            String
+  email           String        @unique
+  bio             String?
+  
+  // Relations to portfolio sections
+  experiences     Experience[]
+  projects        Project[]
+  certifications  Certification[]
+}
+
+// --- Experience Model ---
+model Experience {
+  id          Int       @id @default(autoincrement())
+  userId      Int
+  title       String    // e.g., "Software Engineer"
+  company     String
+  startDate   DateTime
+  endDate     DateTime? // Nullable for current roles
+  description Json?     // Use JSON for rich text/bullet points of responsibilities
+
+  user        User      @relation(fields: [userId], references: [id])
+}
+
+// --- Project Model (Can cover General and Research) ---
+model Project {
+  id          Int       @id @default(autoincrement())
+  userId      Int
+  title       String
+  description String
+  isResearch  Boolean   @default(false) // Differentiates research vs. general projects
+  technologies String[]  // Stores technologies used (e.g., ["React", "Prisma", "PostgreSQL"])
+  demoLink    String?
+  githubLink  String?
+  dateCompleted DateTime?
+
+  user        User      @relation(fields: [userId], references: [id])
+}
+
+// --- Certification Model ---
+model Certification {
+  id          Int       @id @default(autoincrement())
+  userId      Int
+  name        String    // e.g., "AWS Certified Developer"
+  issuer      String    // e.g., "Amazon Web Services"
+  dateEarned  DateTime
+  credentialUrl String?
+
+  user        User      @relation(fields: [userId], references: [id])
+}
