@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "MD. BAKIBILLAH RAHAT's Portfolio",
+  title: "MBR's Portfolio",
   description: "Modern & Minimalist Portfolio",
 };
 
