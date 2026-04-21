@@ -1,64 +1,231 @@
 @import "tailwindcss";
 
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-gradient-to-br from-[#0a0a0a] via-[#111] to-[#0a0a0a] text-white antialiased;
+  }
+
+  ::-webkit-scrollbar {
+    @apply w-2;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-white/20 rounded-full hover:bg-white/40 transition-colors;
+  }
+}
+
 @layer components {
   .card {
     @apply p-6 bg-gradient-to-br from-[#111]/80 to-[#0d0d0d]/80 rounded-2xl border border-white/10 
            hover:border-white/20 shadow-lg hover:shadow-2xl backdrop-blur-sm relative 
-           transition-[background,border-color,box-shadow,opacity] duration-400 md:overflow-hidden overflow-y-auto;
+           transition-all duration-300 overflow-hidden;
   }
 
   .section-title {
-    @apply text-lg font-semibold flex items-center gap-2 text-white/90 mb-3;
+    @apply text-3xl md:text-4xl font-bold flex items-center gap-3 text-white mb-8 relative;
+  }
+
+  .section-subtitle {
+    @apply text-lg text-white/60 mb-6;
   }
 
   .gradient-btn {
-    @apply px-4 py-2 bg-gradient-to-r from-violet-500 to-cyan-500 text-white text-xs font-semibold rounded-lg
-           hover:shadow-lg hover:shadow-violet-500/50 transition-shadow duration-300 transform 
-           translate-y-2 group-hover:translate-y-0 flex items-center gap-2 cursor-pointer;
+    @apply px-6 py-3 bg-gradient-to-r from-violet-500 to-cyan-500 text-white font-semibold rounded-lg
+           hover:shadow-lg hover:shadow-violet-500/50 transition-all duration-300 
+           inline-flex items-center gap-2 cursor-pointer hover:scale-105;
+  }
+
+  .secondary-btn {
+    @apply px-6 py-3 border-2 border-white/20 text-white font-semibold rounded-lg
+           hover:border-white/50 hover:bg-white/10 transition-all duration-300 
+           inline-flex items-center gap-2 cursor-pointer;
   }
 
   .hover-item {
     @apply hover:text-white transition-colors duration-300;
   }
 
-  .bullet {
-    @apply w-1.5 h-1.5 rounded-full flex-shrink-0 transition-colors duration-300;
+  .tech-tag {
+    @apply inline-block px-3 py-1 bg-white/10 border border-white/20 rounded-full text-sm text-white/80
+           hover:bg-white/20 hover:border-white/40 transition-all duration-300;
   }
 
   .soft-card {
-    @apply p-3 rounded-lg bg-white/[0.02] hover:bg-white/[0.05] border border-transparent hover:border-white/10
-           transition-[background,border-color,opacity] duration-300;
+    @apply p-4 rounded-lg bg-white/[0.02] hover:bg-white/[0.05] border border-white/10 hover:border-white/20
+           transition-all duration-300;
   }
 
-  .stats-box {
-    @apply p-3 rounded-lg bg-white/5 hover:bg-white/10 transition-[background,opacity,transform] duration-300 border border-white/5;
+  .timeline-item {
+    @apply relative pl-8 pb-8 border-l-2 border-white/20 hover:border-violet-500 transition-colors;
   }
 
-  .main-grid {
-    @apply w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-4 auto-rows-[100px];
+  .timeline-item::before {
+    content: '';
+    @apply absolute left-[-25px] top-1 w-4 h-4 rounded-full bg-white/30 border-2 border-[#0a0a0a];
   }
 
+  .timeline-item:hover::before {
+    @apply bg-violet-500 shadow-lg shadow-violet-500/50;
+  }
+
+  .underline-effect {
+    @apply relative pb-2 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 
+           after:h-0.5 after:bg-gradient-to-r after:from-violet-500 after:to-cyan-500 
+           hover:after:w-full after:transition-all after:duration-300;
+  }
+
+  .gradient-text {
+    @apply bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent;
+  }
+
+  .glow-box {
+    @apply relative rounded-2xl p-6 overflow-hidden;
+  }
+
+  .glow-box::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-r from-violet-600/20 to-cyan-600/20 rounded-2xl blur-2xl -z-10;
+  }
+
+  .project-card {
+    @apply group relative p-6 rounded-xl bg-gradient-to-br from-[#111]/60 to-[#0d0d0d]/60
+           border border-white/10 hover:border-white/30 transition-all duration-300 cursor-pointer
+           hover:shadow-[0_0_30px_rgba(139,92,246,0.3)];
+  }
+
+  .project-card:hover {
+    @apply transform -translate-y-1;
+  }
+
+  .experience-card {
+    @apply p-6 rounded-lg bg-white/[0.03] border-l-4 border-violet-500 
+           hover:bg-white/[0.08] hover:border-cyan-500 transition-all duration-300;
+  }
+
+  .section-container {
+    @apply w-full py-20 px-4 md:px-8 max-w-6xl mx-auto;
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+
+  @keyframes glow-pulse {
+    0%, 100% {
+      box-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
+    }
+    50% {
+      box-shadow: 0 0 40px rgba(139, 92, 246, 0.8);
+    }
+  }
+
+  @keyframes slide-up {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fade-in-down {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-glow-pulse {
+    animation: glow-pulse 2s ease-in-out infinite;
+  }
+
+  .animate-slide-up {
+    animation: slide-up 0.6s ease-out;
+  }
+
+  .animate-fade-in-down {
+    animation: fade-in-down 0.6s ease-out;
+  }
+
+  /* Color variants for cards */
   .card-violet {
-    @apply hover:border-violet-500 border-2 hover:shadow-[0_0_25px_rgba(139,92,246,1)];
+    @apply hover:border-violet-500/50 hover:shadow-[0_0_25px_rgba(139,92,246,0.3)] transition-all;
   }
 
   .card-cyan {
-    @apply hover:border-cyan-400 border-2  hover:shadow-[0_0_25px_rgba(34,211,238,1)];
+    @apply hover:border-cyan-400/50 hover:shadow-[0_0_25px_rgba(34,211,238,0.3)] transition-all;
   }
 
   .card-green {
-    @apply hover:border-green-400 border-2  hover:shadow-[0_0_25px_rgba(34,197,94,1)];
-  }
-
-  .card-yellow {
-    @apply hover:border-yellow-400 border-2  hover:shadow-[0_0_25px_rgba(250,204,21,1)];
+    @apply hover:border-green-400/50 hover:shadow-[0_0_25px_rgba(34,197,94,0.3)] transition-all;
   }
 
   .card-blue {
-    @apply hover:border-blue-400 border-2  hover:shadow-[0_0_25px_rgba(59,130,246,1)];
+    @apply hover:border-blue-400/50 hover:shadow-[0_0_25px_rgba(59,130,246,0.3)] transition-all;
   }
 
-  .card-orange {
-    @apply hover:border-orange-400 border-2  hover:shadow-[0_0_25px_rgba(249,115,22,1)];
+  /* MDX Styling */
+  .mdx-content {
+    @apply prose prose-invert max-w-none;
+  }
+
+  .mdx-content h1 {
+    @apply text-4xl font-bold mt-8 mb-4 text-white;
+  }
+
+  .mdx-content h2 {
+    @apply text-2xl font-bold mt-6 mb-3 text-white/90;
+  }
+
+  .mdx-content h3 {
+    @apply text-xl font-semibold mt-4 mb-2 text-white/80;
+  }
+
+  .mdx-content p {
+    @apply text-white/70 leading-relaxed mb-4;
+  }
+
+  .mdx-content ul,
+  .mdx-content ol {
+    @apply text-white/70 leading-relaxed mb-4 ml-4;
+  }
+
+  .mdx-content li {
+    @apply mb-2;
+  }
+
+  .mdx-content code {
+    @apply bg-white/10 px-2 py-1 rounded text-cyan-300 font-mono;
+  }
+
+  .mdx-content pre {
+    @apply bg-[#0d0d0d] border border-white/10 rounded-lg p-4 overflow-x-auto mb-4;
+  }
+
+  .mdx-content blockquote {
+    @apply border-l-4 border-violet-500 pl-4 py-2 my-4 text-white/60 italic;
   }
 }

@@ -21,12 +21,18 @@ model User {
   id              Int           @id @default(autoincrement())
   name            String
   email           String        @unique
+  headline        String?       // e.g., "Backend Developer specializing in Python & PostgreSQL"
   bio             String?
+  avatar          String?       // URL to avatar image
   
   // Relations to portfolio sections
   experiences     Experience[]
   projects        Project[]
+  education       Education[]
   certifications  Certification[]
+
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
 }
 
 // --- Experience Model ---
@@ -37,9 +43,36 @@ model Experience {
   company     String
   startDate   DateTime
   endDate     DateTime? // Nullable for current roles
-  description Json?     // Use JSON for rich text/bullet points of responsibilities
+  description String?   // Rich text descriptions of responsibilities
+  shortDescription String? // Bullet point summary
+  isCurrently Boolean   @default(false)
 
-  user        User      @relation(fields: [userId], references: [id])
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([userId])
+}
+
+// --- Education Model (NEW) ---
+model Education {
+  id          Int       @id @default(autoincrement())
+  userId      Int
+  school      String    // e.g., "American International University-Bangladesh"
+  degree      String    // e.g., "Bachelor of Science"
+  field       String    // e.g., "Computer Science"
+  startDate   DateTime
+  endDate     DateTime?
+  description String?
+  gpa         String?
+
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([userId])
 }
 
 // --- Project Model (Can cover General and Research) ---
@@ -48,13 +81,22 @@ model Project {
   userId      Int
   title       String
   description String
+  slug        String    @unique // For dynamic routes like /projects/[slug]
+  content     String?   // MDX content for detailed case study
   isResearch  Boolean   @default(false) // Differentiates research vs. general projects
-  technologies String[]  // Stores technologies used (e.g., ["React", "Prisma", "PostgreSQL"])
+  technologies String[] // Stores technologies used (e.g., ["React", "Prisma", "PostgreSQL"])
   demoLink    String?
   githubLink  String?
+  thumbnail   String?   // URL to project thumbnail/cover image
   dateCompleted DateTime?
 
-  user        User      @relation(fields: [userId], references: [id])
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([userId])
+  @@index([slug])
 }
 
 // --- Certification Model ---
@@ -66,5 +108,10 @@ model Certification {
   dateEarned  DateTime
   credentialUrl String?
 
-  user        User      @relation(fields: [userId], references: [id])
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([userId])
 }
