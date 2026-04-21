@@ -1,36 +1,139 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MBR Portfolio
+
+A modern, responsive portfolio website built with Next.js, TypeScript, Tailwind CSS, and Prisma. Showcases education, experience, and projects with a dynamic database backend.
+
+## Features
+
+- **Modern Design**: Animated background with smooth transitions and responsive layout
+- **Dynamic Content**: API routes to fetch education, experience, and projects data
+- **Database-Driven**: Prisma ORM with SQLite for managing portfolio content
+- **MDX Support**: Write project descriptions using Markdown and React components
+- **Type-Safe**: Full TypeScript support for better development experience
+- **Mobile Responsive**: Optimized for all device sizes with Tailwind CSS
+- **SEO Optimized**: Next.js meta tags and structured data support
+
+## Tech Stack
+
+- **Framework**: Next.js 16 with App Router
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS + PostCSS
+- **Database**: SQLite with Prisma ORM
+- **Content**: MDX for rich text content
+- **Deployment**: Vercel-ready
+
+## Project Structure
+
+```
+├── app/
+│   ├── api/              # API routes for education, experience, projects
+│   ├── projects/         # Dynamic project detail pages
+│   ├── layout.tsx        # Root layout
+│   ├── page.tsx          # Home page
+│   └── globals.css       # Global styles
+├── components/           # Reusable React components
+│   ├── Hero.tsx
+│   ├── ExperienceTimeline.tsx
+│   ├── EducationSection.tsx
+│   ├── ProjectsGrid.tsx
+│   └── ui/              # UI components
+├── lib/
+│   ├── data.ts          # Data utilities
+│   └── mdx.tsx          # MDX configuration
+├── prisma/
+│   ├── schema.prisma    # Database schema
+│   └── seed.ts          # Database seeding script
+└── public/              # Static assets
+```
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
+- Node.js 18+ 
+- npm or yarn
+
+### Installation
+
+1. Clone the repository:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/bakibillahrahat/mbr_portfolio.git
+cd mbr_portfolio
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies:
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Set up the database:
+```bash
+npx prisma migrate dev
+npx prisma db seed
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Create `.env.local` file (if needed):
+```env
+DATABASE_URL="file:./dev.db"
+```
+
+### Development
+
+Run the development server:
+```bash
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) to see the result. The page auto-refreshes when you edit files.
+
+### Build
+
+Create an optimized production build:
+```bash
+npm run build
+npm run start
+```
+
+### Database
+
+- **Migrate**: `npx prisma migrate dev` - Create and apply new migrations
+- **Studio**: `npx prisma studio` - Open Prisma Studio to manage data
+- **Seed**: `npx prisma db seed` - Populate database with sample data
+
+## API Routes
+
+- `GET /api/education` - Fetch all education entries
+- `GET /api/experience` - Fetch all experience entries
+- `GET /api/projects` - Fetch all projects
+
+## Deployment
+
+The easiest way to deploy is using [Vercel](https://vercel.com):
+
+1. Push your code to GitHub
+2. Import the project in Vercel
+3. Vercel will automatically detect Next.js and configure build settings
+4. Deploy with a single click
+
+For manual deployment, build and start the production server:
+```bash
+npm run build
+npm run start
+```
+
+## Development Tips
+
+- Edit components in `/components` to update the UI
+- Update portfolio data in `/lib/data.ts` or through the database
+- Use `npx prisma studio` for visual database management
+- Check `/prisma/schema.prisma` for database structure
 
 ## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+- [Next.js Documentation](https://nextjs.org/docs)
+- [Prisma Documentation](https://www.prisma.io/docs/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [TypeScript](https://www.typescriptlang.org/)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## License
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project is open source and available under the MIT License.
