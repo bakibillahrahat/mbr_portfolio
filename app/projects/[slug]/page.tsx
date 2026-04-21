@@ -258,7 +258,7 @@ export default function ProjectDetail() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="mt-16 mdx-content prose prose-invert max-w-none"
+          className="mt-16 mdx-content max-w-none"
         >
           {project.content.split("##").map((section: string, idx: number) => {
             if (!section.trim()) return null;

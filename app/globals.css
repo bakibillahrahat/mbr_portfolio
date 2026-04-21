@@ -189,7 +189,7 @@
 
   /* MDX Styling */
   .mdx-content {
-    @apply prose prose-invert max-w-none;
+    @apply max-w-none;
   }
 
   .mdx-content h1 {
